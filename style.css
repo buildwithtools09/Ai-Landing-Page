@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -145,10 +145,44 @@ body.dark-mode .restart-section {
 
 .page {
     display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .page.active {
     display: block;
+    opacity: 1;
+}
+
+/* Question Number Display */
+.question-number {
+    font-size: 1em;
+    color: var(--text-color-secondary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
+}
+
+.page.active.animate {
+    animation: fadeIn 0.7s ease-out;
 }
 
 h1 {
@@ -164,18 +198,21 @@ p {
 .cta-button {
     background-color: #4a90e2;
     color: white;
-    padding: 12px 25px;
+    padding: 14px 30px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 1.1em;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
 }
 
 .cta-button:hover {
     background-color: #357ABD;
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
 }
 
 .cta-button:disabled {

@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Career Path Predictor</title>
+    <meta name="description" content="Find your ideal career based on your personality using this smart AI-powered quiz.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +16,7 @@
     <div id="app" class="container">
         <!-- Landing Page -->
         <section id="landing-page" class="page active">
-            <h1>AI Career Path Predictor</h1>
+            <h1>Discover Your Dream Career with AI 🔮</h1>
             <p>Find your ideal career by answering a few personality-based questions.</p>
             <button id="start-quiz-btn" class="cta-button">Start Quiz</button>
         </section>
@@ -22,6 +26,7 @@
             <div class="progress-bar-container">
                 <div class="progress-bar"></div>
             </div>
+            <div id="question-number" class="question-number"></div>
             <h2 id="question-text"></h2>
             <div id="options-container" class="options-grid"></div>
             <button id="next-question-btn" class="cta-button" disabled>Next Question</button>

@@ -104,6 +104,7 @@ const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
 const nextQuestionBtn = document.getElementById('next-question-btn');
 const progressBar = document.querySelector('.progress-bar');
+const questionNumberDisplay = document.getElementById('question-number');
 
 const careerName = document.getElementById('career-name');
 const careerExplanation = document.getElementById('career-explanation');
@@ -123,15 +124,27 @@ darkmodeToggle.addEventListener('change', toggleDarkMode);
 
 function startQuiz() {
     landingPage.classList.remove('active');
-    quizPage.classList.add('active');
+    landingPage.classList.add('fade-out');
+    setTimeout(() => {
+        landingPage.style.display = 'none';
+        quizPage.style.display = 'flex';
+        quizPage.classList.remove('fade-out');
+        quizPage.classList.add('active', 'fade-in');
+    }, 500); // Match CSS transition duration
     currentQuestionIndex = 0;
     scores = { logic: 0, creative: 0, social: 0, leader: 0 };
     loadQuestion();
 }
 
 function restartQuiz() {
-    resultPage.classList.remove('active');
-    landingPage.classList.add('active');
+    resultPage.classList.remove('active', 'fade-in');
+    resultPage.classList.add('fade-out');
+    setTimeout(() => {
+        resultPage.style.display = 'none';
+        landingPage.style.display = 'flex';
+        landingPage.classList.remove('fade-out');
+        landingPage.classList.add('active', 'fade-in');
+    }, 500); // Match CSS transition duration
     currentQuestionIndex = 0;
     scores = { logic: 0, creative: 0, social: 0, leader: 0 };
     selectedOption = null;
@@ -140,6 +153,7 @@ function restartQuiz() {
 
 function loadQuestion() {
     updateProgressBar();
+    updateQuestionNumber();
     selectedOption = null;
     nextQuestionBtn.disabled = true;
     optionsContainer.innerHTML = '';
@@ -147,6 +161,10 @@ function loadQuestion() {
     if (currentQuestionIndex < questions.length) {
         const q = questions[currentQuestionIndex];
         questionText.textContent = q.question;
+
+        optionsContainer.classList.remove('fade-in'); // Reset animation
+        void optionsContainer.offsetWidth; // Trigger reflow
+        optionsContainer.classList.add('fade-in'); // Apply animation
 
         q.options.forEach((option, index) => {
             const button = document.createElement('button');
@@ -185,13 +203,23 @@ function loadNextQuestion() {
 }
 
 function updateProgressBar() {
-    const progress = (currentQuestionIndex / questions.length) * 100;
+    const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
     progressBar.style.width = `${progress}%`;
 }
 
+function updateQuestionNumber() {
+    questionNumberDisplay.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+}
+
 function showResult() {
-    quizPage.classList.remove('active');
-    resultPage.classList.add('active');
+    quizPage.classList.remove('active', 'fade-in');
+    quizPage.classList.add('fade-out');
+    setTimeout(() => {
+        quizPage.style.display = 'none';
+        resultPage.style.display = 'flex';
+        resultPage.classList.remove('fade-out');
+        resultPage.classList.add('active', 'fade-in');
+    }, 500); // Match CSS transition duration
 
     const sortedScores = Object.entries(scores).sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
     const topTrait = sortedScores[0][0];
@@ -279,19 +307,19 @@ function toggleDarkMode() {
     }
 }
 
-// Initial load
+// Initial load: Apply saved dark mode preference
 document.addEventListener('DOMContentLoaded', () => {
-    landingPage.classList.add('active');
-
-    // Load dark mode preference
-    if (localStorage.getItem('theme') === 'dark') {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
         darkmodeToggle.checked = true;
     }
 
-    // Load jsPDF library dynamically
-    const script = document.createElement('script');
-    script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
-    script.onload = () => console.log("jsPDF loaded");
-    document.head.appendChild(script);
+    // Ensure only the landing page is visible initially
+    landingPage.style.display = 'flex';
+    quizPage.style.display = 'none';
+    resultPage.style.display = 'none';
 });
+
+// Load jsPDF library dynamically
+document.head.appendChild(script);
