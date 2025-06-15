@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Path Predictor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <input type="checkbox" id="darkmode-toggle" class="darkmode-toggle">
+    <label for="darkmode-toggle" class="darkmode-label"></label>
+    <div id="app" class="container">
+        <!-- Landing Page -->
+        <section id="landing-page" class="page active">
+            <h1>AI Career Path Predictor</h1>
+            <p>Find your ideal career by answering a few personality-based questions.</p>
+            <button id="start-quiz-btn" class="cta-button">Start Quiz</button>
+        </section>
+
+        <!-- Quiz Page -->
+        <section id="quiz-page" class="page">
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
+            <h2 id="question-text"></h2>
+            <div id="options-container" class="options-grid"></div>
+            <button id="next-question-btn" class="cta-button" disabled>Next Question</button>
+        </section>
+
+        <!-- Result Page -->
+        <section id="result-page" class="page">
+            <h2>Your Ideal Career Path</h2>
+            <div class="result-card">
+                <p class="emoji"></p>
+                <h3 id="career-name"></h3>
+                <p id="career-explanation"></p>
+                <div id="tools-to-explore" class="tools-section">
+                    <h4>Tools to Explore:</h4>
+                    <ul id="tools-list"></ul>
+                </div>
+            </div>
+            <div class="result-actions">
+                <button id="download-pdf-btn" class="cta-button">Download Result as PDF</button>
+                <button id="share-whatsapp-btn" class="cta-button">Share on WhatsApp</button>
+            </div>
+            <!-- Ad Placement Placeholder -->
+            <div class="ad-placeholder">
+                <p>Advertisement</p>
+            </div>
+            <div class="restart-section">
+                <p>Wanna try again?</p>
+                <button id="restart-quiz-btn" class="cta-button">Retake Quiz</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
