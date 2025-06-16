@@ -1,325 +1,124 @@
-const questions = [
-    {
-        question: "When faced with a complex problem, what's your first instinct?",
-        options: [
-            { text: "Break it down into smaller, manageable parts.", scores: { logic: 2, leader: 1 } },
-            { text: "Brainstorm creative and unconventional solutions.", scores: { creative: 2, social: 1 } },
-            { text: "Seek input and collaborate with others.", scores: { social: 2, leader: 1 } },
-            { text: "Take charge and define a clear action plan.", scores: { leader: 2, logic: 1 } }
-        ]
-    },
-    {
-        question: "What kind of environment do you thrive in?",
-        options: [
-            { text: "Structured and organized, with clear goals.", scores: { logic: 2 } },
-            { text: "Dynamic and open-ended, with room for innovation.", scores: { creative: 2 } },
-            { text: "Collaborative and supportive, with strong team bonds.", scores: { social: 2 } },
-            { text: "Challenging and competitive, with opportunities to lead.", scores: { leader: 2 } }
-        ]
-    },
-    {
-        question: "How do you prefer to learn new skills?",
-        options: [
-            { text: "Through logical analysis and detailed instructions.", scores: { logic: 2 } },
-            { text: "By experimenting and hands-on practice.", scores: { creative: 2 } },
-            { text: "From mentors and group discussions.", scores: { social: 2 } },
-            { text: "By taking on leadership roles and teaching others.", scores: { leader: 2 } }
-        ]
-    },
-    {
-        question: "What motivates you most in a work setting?",
-        options: [
-            { text: "Solving intricate problems and seeing tangible results.", scores: { logic: 2 } },
-            { text: "Expressing your unique ideas and bringing them to life.", scores: { creative: 2 } },
-            { text: "Building strong relationships and helping others succeed.", scores: { social: 2 } },
-            { text: "Guiding a team to achieve ambitious goals.", scores: { leader: 2 } }
-        ]
-    },
-    {
-        question: "Which activity sounds most appealing to you?",
-        options: [
-            { text: "Designing a complex system or algorithm.", scores: { logic: 2, creative: 1 } },
-            { text: "Creating a piece of art or innovative product.", scores: { creative: 2, social: 1 } },
-            { text: "Organizing a community event or social gathering.", scores: { social: 2, leader: 1 } },
-            { text: "Strategizing and leading a new project initiative.", scores: { leader: 2, logic: 1 } }
-        ]
-    }
+const audiences = [
+    "freelancers", "students", "doctors", "lawyers", "gamers",
+    "small business owners", "remote workers", "artists", "musicians",
+    "teachers", "parents", "pet owners", "fitness enthusiasts",
+    "travelers", "foodies", "developers", "designers", "marketers"
 ];
 
-const careerPaths = [
-    {
-        name: "Software Engineer 💻",
-        explanation: "You enjoy logical problem-solving and building efficient systems. A career in software engineering allows you to design, develop, and maintain software applications, using your analytical skills to create innovative solutions.",
-        traits: { logic: 2, creative: 1 },
-        tools: ["Python", "JavaScript", "Git", "VS Code"]
-    },
-    {
-        name: "Graphic Designer 🎨",
-        explanation: "Your creativity and artistic flair are your strongest assets. As a graphic designer, you'll use visual communication to convey messages, create stunning visuals for brands, and bring imaginative concepts to life.",
-        traits: { creative: 2, social: 1 },
-        tools: ["Figma", "Adobe Photoshop", "Adobe Illustrator"]
-    },
-    {
-        name: "Marketing Specialist 📈",
-        explanation: "You excel at understanding people and connecting with audiences. A marketing specialist crafts campaigns, analyzes market trends, and builds brand awareness, leveraging strong communication and social skills.",
-        traits: { social: 2, creative: 1 },
-        tools: ["Google Analytics", "Mailchimp", "Hootsuite"]
-    },
-    {
-        name: "Project Manager 📊",
-        explanation: "You have a natural ability to lead, organize, and drive projects to completion. As a project manager, you'll coordinate teams, manage resources, and ensure that objectives are met on time and within budget.",
-        traits: { leader: 2, logic: 1 },
-        tools: ["Jira", "Asana", "Microsoft Project"]
-    },
-    {
-        name: "Data Scientist 🧠",
-        explanation: "Your analytical mind thrives on extracting insights from complex data. A data scientist collects, processes, and analyzes large datasets to help organizations make informed decisions and predict future trends.",
-        traits: { logic: 2, leader: 1 },
-        tools: ["R", "Python (Pandas, NumPy)", "SQL", "Tableau"]
-    },
-    {
-        name: "UX/UI Designer ✨",
-        explanation: "You combine creativity with a user-centric approach to design intuitive and engaging digital experiences. You focus on how users interact with products and make them visually appealing and easy to use.",
-        traits: { creative: 2, logic: 1 },
-        tools: ["Figma", "Sketch", "Adobe XD"]
-    },
-    {
-        name: "Human Resources Manager 🤝",
-        explanation: "You are skilled at fostering positive work environments and managing interpersonal dynamics. An HR manager handles recruitment, employee relations, and ensures a supportive and productive workplace culture.",
-        traits: { social: 2, leader: 1 },
-        tools: ["Workday", "BambooHR", "LinkedIn Recruiter"]
-    }
+const aiFunctions = [
+    "summarize text", "predict outcomes", "analyze tone", "generate visuals",
+    "auto-respond to customer queries", "transcribe audio", "translate languages",
+    "create personalized learning paths", "optimize schedules", "detect anomalies",
+    "generate code snippets", "compose music", "diagnose issues", "recommend products",
+    "simulate scenarios", "enhance images", "automate data entry", "identify objects"
 ];
 
-let currentQuestionIndex = 0;
-let scores = { logic: 0, creative: 0, social: 0, leader: 0 };
-let selectedOption = null;
+const platforms = [
+    "mobile app", "chrome extension", "WhatsApp bot", "web dashboard",
+    "SaaS platform", "API service", "desktop application", "smart home device integration",
+    "email plugin", "voice assistant skill", "VR/AR experience", "blockchain dApp",
+    "wearable tech integration", "chatbot for websites", "CRM integration", "e-commerce plugin"
+];
 
-const landingPage = document.getElementById('landing-page');
-const quizPage = document.getElementById('quiz-page');
-const resultPage = document.getElementById('result-page');
+const bonusFeatures = [
+    "10K installs goal tracker", "community forum", "gamified progress tracking",
+    "integration with popular tools (e.g., Slack, Notion)", "AI-powered analytics dashboard",
+    "personalized onboarding", "expert-led workshops", "template library",
+    "one-click deployment", "offline mode", "multi-language support", "customizable workflows"
+];
 
-const startQuizBtn = document.getElementById('start-quiz-btn');
-const questionText = document.getElementById('question-text');
-const optionsContainer = document.getElementById('options-container');
-const nextQuestionBtn = document.getElementById('next-question-btn');
-const progressBar = document.querySelector('.progress-bar');
-const questionNumberDisplay = document.getElementById('question-number');
+const problemsSolved = [
+    "saves time", "improves efficiency", "reduces costs", "enhances creativity",
+    "streamlines communication", "boosts productivity", "simplifies complex tasks",
+    "provides instant insights", "automates repetitive work", "improves decision-making",
+    "personalizes user experience", "expands reach", "reduces errors", "fosters collaboration"
+];
 
-const careerName = document.getElementById('career-name');
-const careerExplanation = document.getElementById('career-explanation');
-const emojiDisplay = document.querySelector('.result-card .emoji');
-const toolsList = document.getElementById('tools-list');
-const downloadPdfBtn = document.getElementById('download-pdf-btn');
-const shareWhatsappBtn = document.getElementById('share-whatsapp-btn');
-const restartQuizBtn = document.getElementById('restart-quiz-btn');
-const darkmodeToggle = document.getElementById('darkmode-toggle');
+const monetizations = [
+    "Monthly subscription ₹199", "Freemium model with premium features",
+    "One-time purchase", "Per-use pricing", "Ad-supported model",
+    "Tiered subscription plans", "Commission-based (e.g., on sales generated)",
+    "Enterprise licensing", "Donation-based", "Affiliate partnerships"
+];
 
-startQuizBtn.addEventListener('click', startQuiz);
-nextQuestionBtn.addEventListener('click', loadNextQuestion);
-downloadPdfBtn.addEventListener('click', downloadResultAsPdf);
-shareWhatsappBtn.addEventListener('click', shareOnWhatsApp);
-restartQuizBtn.addEventListener('click', restartQuiz);
-darkmodeToggle.addEventListener('change', toggleDarkMode);
-
-function startQuiz() {
-    landingPage.classList.remove('active');
-    landingPage.classList.add('fade-out');
-    setTimeout(() => {
-        landingPage.style.display = 'none';
-        quizPage.style.display = 'flex';
-        quizPage.classList.remove('fade-out');
-        quizPage.classList.add('active', 'fade-in');
-    }, 500); // Match CSS transition duration
-    currentQuestionIndex = 0;
-    scores = { logic: 0, creative: 0, social: 0, leader: 0 };
-    loadQuestion();
+function getRandom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function restartQuiz() {
-    resultPage.classList.remove('active', 'fade-in');
-    resultPage.classList.add('fade-out');
+function generateIdea() {
+    const targetAudience = getRandom(audiences);
+    const aiCapability = getRandom(aiFunctions);
+    const format = getRandom(platforms);
+    const problem = getRandom(problemsSolved);
+    const monetization = getRandom(monetizations);
+    const bonus = getRandom(bonusFeatures);
+
+    const ideaText = `A ${format} that helps ${targetAudience} to ${aiCapability} with AI.`;
+
+    document.getElementById('startup-idea-text').textContent = ideaText;
+    document.getElementById('audience-text').textContent = targetAudience;
+    document.getElementById('ai-power-text').textContent = aiCapability;
+    document.getElementById('format-text').textContent = format;
+    document.getElementById('problem-solved-text').textContent = problem;
+    document.getElementById('monetization-text').textContent = monetization;
+
+    // For now, we'll just display the core idea. The example output had more fields.
+    // You can extend the HTML and this JS to include problem, monetization, and bonus.
+
+    const ideaOutput = document.getElementById('idea-output');
+    ideaOutput.style.display = 'block';
+    ideaOutput.style.opacity = 0;
+    ideaOutput.style.transform = 'translateY(20px)';
     setTimeout(() => {
-        resultPage.style.display = 'none';
-        landingPage.style.display = 'flex';
-        landingPage.classList.remove('fade-out');
-        landingPage.classList.add('active', 'fade-in');
-    }, 500); // Match CSS transition duration
-    currentQuestionIndex = 0;
-    scores = { logic: 0, creative: 0, social: 0, leader: 0 };
-    selectedOption = null;
-    // Optionally, clear previous results or reset UI elements if needed
+        ideaOutput.style.opacity = 1;
+        ideaOutput.style.transform = 'translateY(0)';
+    }, 10);
 }
 
-function loadQuestion() {
-    updateProgressBar();
-    updateQuestionNumber();
-    selectedOption = null;
-    nextQuestionBtn.disabled = true;
-    optionsContainer.innerHTML = '';
+function saveIdea() {
+    const idea = {
+        ideaText: document.getElementById('startup-idea-text').textContent,
+        audience: document.getElementById('audience-text').textContent,
+        aiPower: document.getElementById('ai-power-text').textContent,
+        format: document.getElementById('format-text').textContent,
+        problemSolved: document.getElementById('problem-solved-text').textContent,
+        monetization: document.getElementById('monetization-text').textContent
+    };
 
-    if (currentQuestionIndex < questions.length) {
-        const q = questions[currentQuestionIndex];
-        questionText.textContent = q.question;
+    let savedIdeas = JSON.parse(localStorage.getItem('savedIdeas')) || [];
+    savedIdeas.push(idea);
+    localStorage.setItem('savedIdeas', JSON.stringify(savedIdeas));
+    alert('Idea saved!'); // Simple feedback
+}
 
-        optionsContainer.classList.remove('fade-in'); // Reset animation
-        void optionsContainer.offsetWidth; // Trigger reflow
-        optionsContainer.classList.add('fade-in'); // Apply animation
+function shareIdea() {
+    const ideaText = document.getElementById('startup-idea-text').textContent;
+    const shareData = {
+        title: 'AI Startup Idea',
+        text: `Check out this AI Startup Idea: "${ideaText}"`, 
+        url: window.location.href
+    };
 
-        q.options.forEach((option, index) => {
-            const button = document.createElement('button');
-            button.classList.add('option-button');
-            button.textContent = option.text;
-            button.dataset.index = index;
-            button.addEventListener('click', () => selectOption(button, option.scores));
-            optionsContainer.appendChild(button);
-        });
+    if (navigator.share) {
+        navigator.share(shareData)
+            .then(() => console.log('Idea shared successfully'))
+            .catch((error) => console.error('Error sharing:', error));
     } else {
-        showResult();
+        // Fallback for browsers that do not support Web Share API
+        prompt('Copy this idea to share:', shareData.text);
     }
 }
 
-function selectOption(button, optionScores) {
-    // Remove 'selected' class from previously selected button
-    const currentSelected = optionsContainer.querySelector('.option-button.selected');
-    if (currentSelected) {
-        currentSelected.classList.remove('selected');
-    }
+// Event Listeners
+document.getElementById('generate-idea-btn').addEventListener('click', generateIdea);
+document.querySelector('.card-actions .btn-secondary:last-child').addEventListener('click', generateIdea);
+document.querySelector('.card-actions .btn-secondary:first-child').addEventListener('click', saveIdea);
+document.querySelector('.card-actions .btn-secondary:nth-child(2)').addEventListener('click', shareIdea);
 
-    // Add 'selected' class to the clicked button
-    button.classList.add('selected');
-    selectedOption = optionScores;
-    nextQuestionBtn.disabled = false;
-}
-
-function loadNextQuestion() {
-    if (selectedOption) {
-        for (const trait in selectedOption) {
-            scores[trait] += selectedOption[trait];
-        }
-    }
-    currentQuestionIndex++;
-    loadQuestion();
-}
-
-function updateProgressBar() {
-    const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-    progressBar.style.width = `${progress}%`;
-}
-
-function updateQuestionNumber() {
-    questionNumberDisplay.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
-}
-
-function showResult() {
-    quizPage.classList.remove('active', 'fade-in');
-    quizPage.classList.add('fade-out');
-    setTimeout(() => {
-        quizPage.style.display = 'none';
-        resultPage.style.display = 'flex';
-        resultPage.classList.remove('fade-out');
-        resultPage.classList.add('active', 'fade-in');
-    }, 500); // Match CSS transition duration
-
-    const sortedScores = Object.entries(scores).sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
-    const topTrait = sortedScores[0][0];
-
-    // Find the best matching career path based on top trait and secondary traits
-    let bestMatch = null;
-    let maxMatchScore = -1;
-
-    careerPaths.forEach(career => {
-        let matchScore = 0;
-        for (const trait in career.traits) {
-            matchScore += scores[trait] * career.traits[trait];
-        }
-        if (matchScore > maxMatchScore) {
-            maxMatchScore = matchScore;
-            bestMatch = career;
-        }
-    });
-
-    if (bestMatch) {
-        careerName.textContent = bestMatch.name;
-        careerExplanation.textContent = bestMatch.explanation;
-        emojiDisplay.textContent = bestMatch.name.split(' ').pop(); // Extract emoji from name
-
-        toolsList.innerHTML = '';
-        if (bestMatch.tools && bestMatch.tools.length > 0) {
-            bestMatch.tools.forEach(tool => {
-                const li = document.createElement('li');
-                li.textContent = tool;
-                toolsList.appendChild(li);
-            });
-        } else {
-            document.getElementById('tools-to-explore').style.display = 'none';
-        }
-    } else {
-        careerName.textContent = "No clear path found";
-        careerExplanation.textContent = "It seems your unique blend of skills doesn't perfectly align with our predefined paths. Explore various fields to find your true calling!";
-        emojiDisplay.textContent = "🤔";
-        document.getElementById('tools-to-explore').style.display = 'none';
-    }
-}
-
-function downloadResultAsPdf() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    doc.text("AI Career Path Predictor Result", 10, 10);
-    doc.text(`Career: ${careerName.textContent}`, 10, 30);
-    doc.text(`Explanation: ${careerExplanation.textContent}`, 10, 40);
-
-    let yOffset = 50;
-    const toolsSection = document.getElementById('tools-to-explore');
-    if (toolsSection.style.display !== 'none') {
-        doc.text("Tools to Explore:", 10, yOffset + 10);
-        yOffset += 20;
-        Array.from(toolsList.children).forEach(li => {
-            doc.text(`- ${li.textContent}`, 15, yOffset);
-            yOffset += 10;
-        });
-    }
-
-    doc.save("AI_Career_Path_Result.pdf");
-}
-
-function shareOnWhatsApp() {
-    const career = careerName.textContent;
-    const explanation = careerExplanation.textContent;
-    const tools = Array.from(toolsList.children).map(li => li.textContent).join(', ');
-
-    let message = `My AI Career Path Prediction: %0A%0A*Career:* ${career}%0A%0A*Explanation:* ${explanation}`;
-    if (tools) {
-        message += `%0A%0A*Tools to Explore:* ${tools}`;
-    }
-    message += `%0A%0AFind your path too: ${window.location.href}`;
-
-    window.open(`https://wa.me/?text=${message}`, '_blank');
-}
-
-function toggleDarkMode() {
+// Theme Toggle
+document.getElementById('theme-toggle').addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
-    if (document.body.classList.contains('dark-mode')) {
-        localStorage.setItem('theme', 'dark');
-    } else {
-        localStorage.setItem('theme', 'light');
-    }
-}
-
-// Initial load: Apply saved dark mode preference
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        darkmodeToggle.checked = true;
-    }
-
-    // Ensure only the landing page is visible initially
-    landingPage.style.display = 'flex';
-    quizPage.style.display = 'none';
-    resultPage.style.display = 'none';
 });
 
-// Load jsPDF library dynamically
-document.head.appendChild(script);
+// Initial idea generation on load (optional)
+// generateIdea();

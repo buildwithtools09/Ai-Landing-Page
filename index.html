@@ -3,62 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Career Path Predictor</title>
-    <meta name="description" content="Find your ideal career based on your personality using this smart AI-powered quiz.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>AI Startup Idea Generator</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <input type="checkbox" id="darkmode-toggle" class="darkmode-toggle">
-    <label for="darkmode-toggle" class="darkmode-label"></label>
-    <div id="app" class="container">
-        <!-- Landing Page -->
-        <section id="landing-page" class="page active">
-            <h1>Discover Your Dream Career with AI 🔮</h1>
-            <p>Find your ideal career by answering a few personality-based questions.</p>
-            <button id="start-quiz-btn" class="cta-button">Start Quiz</button>
+    <header>
+        <nav>
+            <h1>🤖 AI Startup Idea Generator</h1>
+            <button id="theme-toggle">Toggle Theme</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Generate the next million-dollar AI startup idea in one click.</h2>
+            <button id="generate-idea-btn" class="btn-primary">Generate Idea</button>
         </section>
 
-        <!-- Quiz Page -->
-        <section id="quiz-page" class="page">
-            <div class="progress-bar-container">
-                <div class="progress-bar"></div>
-            </div>
-            <div id="question-number" class="question-number"></div>
-            <h2 id="question-text"></h2>
-            <div id="options-container" class="options-grid"></div>
-            <button id="next-question-btn" class="cta-button" disabled>Next Question</button>
-        </section>
-
-        <!-- Result Page -->
-        <section id="result-page" class="page">
-            <h2>Your Ideal Career Path</h2>
-            <div class="result-card">
-                <p class="emoji"></p>
-                <h3 id="career-name"></h3>
-                <p id="career-explanation"></p>
-                <div id="tools-to-explore" class="tools-section">
-                    <h4>Tools to Explore:</h4>
-                    <ul id="tools-list"></ul>
-                </div>
-            </div>
-            <div class="result-actions">
-                <button id="download-pdf-btn" class="cta-button">Download Result as PDF</button>
-                <button id="share-whatsapp-btn" class="cta-button">Share on WhatsApp</button>
-            </div>
-            <!-- Ad Placement Placeholder -->
-            <div class="ad-placeholder">
-                <p>Advertisement</p>
-            </div>
-            <div class="restart-section">
-                <p>Wanna try again?</p>
-                <button id="restart-quiz-btn" class="cta-button">Retake Quiz</button>
+        <section id="idea-output" class="idea-card" style="display: none;">
+            <h3>💡 Startup Idea:</h3>
+            <p id="startup-idea-text"></p>
+            <ul>
+                <li>👥 Audience: <span id="audience-text"></span></li>
+                <li>🧠 AI Power: <span id="ai-power-text"></span></li>
+                <li>📦 Format: <span id="format-text"></span></li>
+                <li>🔥 Problem Solved: <span id="problem-solved-text"></span></li>
+                <li>💸 Monetization: <span id="monetization-text"></span></li>
+            </ul>
+            <div class="card-actions">
+                <button class="btn-secondary">💾 Save Idea</button>
+                <button class="btn-secondary">📤 Share</button>
+                <button class="btn-secondary">🔁 New Idea</button>
             </div>
         </section>
-    </div>
+    </main>
 
-    <script src="script.js"></script>
+    <footer>
+        <p>Made with ❤️ by Kamal and Utkarsh</p>
+    </footer>
+
+    <script src="script.js" defer></script>
 </body>
 </html>
